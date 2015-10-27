@@ -42,6 +42,7 @@ public class Desafio {
             final JSONArray results = obj.getJSONArray("results");
             if (obj.getInt("total_results") == 0) {
                 System.out.println("Não há resultados para sua pesquisa!");
+                System.exit(0);
             } else {
                 final JSONObject pegaID = results.getJSONObject(0);
                 ID = pegaID.getInt("id");

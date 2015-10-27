@@ -17,7 +17,6 @@ public class Desafio_Bonus1 {
     public static void main(String[] args) throws Exception {
         List filmesAtores = new ArrayList();
         Scanner entrada = new Scanner(System.in);
-        char maior = 0;
         int ID[] = new int[2];
         int contador = 0, tamanhoVet = 0;
         String filmes1Ator[] = new String[tamanhoVet];
@@ -53,6 +52,7 @@ public class Desafio_Bonus1 {
                 final JSONArray results = obj.getJSONArray("results");
                 if (obj.getInt("total_results") == 0) {
                     System.out.println("Não há resultados para sua pesquisa!");
+                    System.exit(0);
                 } else {
                     final JSONObject pegaID = results.getJSONObject(0);
                     ID[contador] = pegaID.getInt("id");

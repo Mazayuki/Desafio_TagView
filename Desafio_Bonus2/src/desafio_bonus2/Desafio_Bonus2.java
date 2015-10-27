@@ -52,10 +52,11 @@ public class Desafio_Bonus2 {
                 final JSONArray results = obj.getJSONArray("results");
                 if (obj.getInt("total_results") == 0) {
                     System.out.println("Não há resultados para sua pesquisa!");
+                    System.exit(0);
                 } else {
                     final JSONObject pegaID = results.getJSONObject(0);
                     ID = pegaID.getInt("id");
-                    System.out.println("O ID do ator" + nomeAtor[q] + " é: " + ID);
+                    System.out.println("O ID do ator " + nomeAtor[q] + " é: " + ID);
                 }
 
                 //Inicio da listagem de filmes
@@ -83,7 +84,9 @@ public class Desafio_Bonus2 {
                                 contador = true; //se em algum momento for igual, não insere
                             }
                         }
-                    } else if (!contador) {
+                    } 
+                    
+                    if (!contador && jaEntrou) {
                         filmes.add(filme.getString("original_title"));
                     }
                 }
