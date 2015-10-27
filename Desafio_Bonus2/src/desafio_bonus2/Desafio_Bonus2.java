@@ -20,20 +20,22 @@ public class Desafio_Bonus2 {
         Scanner nome = new Scanner(System.in);
         boolean jaEntrou = false, contador = false;
         int ID = 0;
-        int q = 0;
+        int q = 0, x=1;
         String nomeAtor[] = null;
         System.out.println("Digite a quantidado de atores que deseja ver os filmes: ");
-        int qtd = entrada.nextInt();
-        nomeAtor = new String[qtd];
-        while (q != qtd) {
-            System.out.println("Digite o nome do " + q + " ator: ");
-            nomeAtor[q] = nome.nextLine();
-            nomeAtor[q] = nomeAtor[q].replaceAll("\\s+", " ");
-            nomeAtor[q] = nomeAtor[q].replaceAll(" ", "-");
-            q++;
-        }
-        q = 0;
         try {
+            int qtd = entrada.nextInt();
+            nomeAtor = new String[qtd];
+            while (q != qtd) {
+                System.out.println("Digite o nome do " + x + " ator: ");
+                nomeAtor[q] = nome.nextLine();
+                nomeAtor[q] = nomeAtor[q].replaceAll("\\s+", " ");
+                nomeAtor[q] = nomeAtor[q].replaceAll(" ", "-");
+                q++;
+                x++;
+            }
+            q = 0;
+
             while (q != qtd) {
                 URL buscaId = new URL("https://api.themoviedb.org/3/search/person?api_key=ae9920c6307a74abdd5b44b603426542&query=" + nomeAtor[q]);
                 URLConnection conexao = buscaId.openConnection();
@@ -82,15 +84,17 @@ public class Desafio_Bonus2 {
                         for (int j = 0; j < filmes.size(); j++) {
                             if (filmes.get(j).equals(filme.getString("original_title"))) {
                                 contador = true; //se em algum momento for igual, não insere
+                                break;
                             }
                         }
-                    } 
-                    
+                    }
+
                     if (!contador && jaEntrou) {
                         filmes.add(filme.getString("original_title"));
                     }
+                    jaEntrou = true;
+                    contador = false;
                 }
-                jaEntrou = true;
                 q++;
             }
 
@@ -98,6 +102,8 @@ public class Desafio_Bonus2 {
 
         } catch (java.io.IOException e) {
             System.out.println("Não há resultados para sua pesquisa!");
+        } catch (java.util.InputMismatchException e) {
+            System.out.println("Insira um número válido!");
         }
     }
 }
