@@ -20,24 +20,30 @@ public class Desafio_Bonus2 {
         Scanner nome = new Scanner(System.in);
         boolean jaEntrou = false, contador = false;
         int ID = 0;
-        int q = 0, x=1;
+        int valorVet = 0, numeroAtor = 1;
+
+        System.out.println("digite a sua API KEY!");
+        String API_KEY = entrada.nextLine();
+
         String nomeAtor[] = null;
         System.out.println("Digite a quantidado de atores que deseja ver os filmes: ");
+        
         try {
             int qtd = entrada.nextInt();
             nomeAtor = new String[qtd];
-            while (q != qtd) {
-                System.out.println("Digite o nome do " + x + " ator: ");
-                nomeAtor[q] = nome.nextLine();
-                nomeAtor[q] = nomeAtor[q].replaceAll("\\s+", " ");
-                nomeAtor[q] = nomeAtor[q].replaceAll(" ", "-");
-                q++;
-                x++;
+            while (valorVet != qtd) {
+                System.out.println("Digite o nome do " + numeroAtor + " ator: ");
+                nomeAtor[valorVet] = nome.nextLine();
+                nomeAtor[valorVet] = nomeAtor[valorVet].replaceAll("\\s+", " ");
+                nomeAtor[valorVet] = nomeAtor[valorVet].replaceAll(" ", "-");
+                valorVet++;
+                numeroAtor++;
             }
-            q = 0;
+            valorVet = 0; //o contador do vetor é zarado para que
+                          //a query leia todos nomes
 
-            while (q != qtd) {
-                URL buscaId = new URL("https://api.themoviedb.org/3/search/person?api_key=ae9920c6307a74abdd5b44b603426542&query=" + nomeAtor[q]);
+            while (valorVet != qtd) {
+                URL buscaId = new URL("https://api.themoviedb.org/3/search/person?api_key="+API_KEY+"&query=" + nomeAtor[valorVet]);
                 URLConnection conexao = buscaId.openConnection();
                 BufferedReader leitor = new BufferedReader(
                         new InputStreamReader(
@@ -58,11 +64,11 @@ public class Desafio_Bonus2 {
                 } else {
                     final JSONObject pegaID = results.getJSONObject(0);
                     ID = pegaID.getInt("id");
-                    System.out.println("O ID do ator " + nomeAtor[q] + " é: " + ID);
+                    System.out.println("O ID do ator " + nomeAtor[valorVet] + " é: " + ID);
                 }
 
                 //Inicio da listagem de filmes
-                URL buscaFilmes = new URL("https://api.themoviedb.org/3/person/" + ID + "/credits?api_key=ae9920c6307a74abdd5b44b603426542");
+                URL buscaFilmes = new URL("https://api.themoviedb.org/3/person/" + ID + "/credits?api_key="+API_KEY);
                 conexao = buscaFilmes.openConnection();
                 leitor = new BufferedReader(
                         new InputStreamReader(
@@ -95,7 +101,7 @@ public class Desafio_Bonus2 {
                     jaEntrou = true;
                     contador = false;
                 }
-                q++;
+                valorVet++;
             }
 
             System.out.println("Lista completa dos filmes realizados:\n" + filmes);

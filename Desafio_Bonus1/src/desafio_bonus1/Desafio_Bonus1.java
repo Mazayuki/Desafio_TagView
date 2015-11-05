@@ -21,9 +21,14 @@ public class Desafio_Bonus1 {
         int contador = 0, tamanhoVet = 0;
         String filmes1Ator[] = new String[tamanhoVet];
         String filmes2Ator[] = new String[tamanhoVet];
-        String nomeAtor[] = new String[1000];
+        String nomeAtor[] = new String[2];
+
+        System.out.println("digite a sua API KEY!");
+        String API_KEY = entrada.nextLine();
+
         System.out.println("Digite o nome do primeiro ator: ");
         nomeAtor[0] = entrada.nextLine();
+
         System.out.println("Digite o nome do segundo ator: ");
         nomeAtor[1] = entrada.nextLine();
 
@@ -35,7 +40,7 @@ public class Desafio_Bonus1 {
 
         try {
             while (contador != 2) {
-                URL buscaId = new URL("https://api.themoviedb.org/3/search/person?api_key=ae9920c6307a74abdd5b44b603426542&query=" + nomeAtor[contador]);
+                URL buscaId = new URL("https://api.themoviedb.org/3/search/person?api_key=" + API_KEY + "&query=" + nomeAtor[contador]);
                 URLConnection conexao = buscaId.openConnection();
                 BufferedReader leitor = new BufferedReader(
                         new InputStreamReader(
@@ -60,7 +65,7 @@ public class Desafio_Bonus1 {
                 }
 
                 //Inicio da listagem de filmes
-                URL buscaFilmes = new URL("https://api.themoviedb.org/3/person/" + ID[contador] + "/credits?api_key=ae9920c6307a74abdd5b44b603426542");
+                URL buscaFilmes = new URL("https://api.themoviedb.org/3/person/" + ID[contador] + "/credits?api_key="+API_KEY);
                 conexao = buscaFilmes.openConnection();
                 leitor = new BufferedReader(
                         new InputStreamReader(
